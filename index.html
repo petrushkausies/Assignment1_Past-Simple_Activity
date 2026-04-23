@@ -4,160 +4,145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Past Simple Card Game</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --cream: #faf7f2;
-    --dark: #1a1a2e;
-    --subject-front: #2d6a4f;
-    --subject-back: #1b4332;
-    --action-front: #c77dff;
-    --action-back: #7b2d8b;
+    --bg: #f7f3ee;
+    --subject-back: #b8d4e8;
+    --subject-front: #daeef9;
+    --subject-accent: #6aaed6;
+    --action-back: #c8b8e8;
+    --action-front: #ecdff9;
+    --action-accent: #9b7dd4;
+    --text-dark: #3a3560;
+    --text-mid: #6b659a;
     --accent: #f4a261;
-    --selected-glow: #f4a261;
-    --text-light: #faf7f2;
-    --card-w: 130px;
-    --card-h: 85px;
+    --card-w: 118px;
+    --card-h: 80px;
   }
 
   body {
-    background: var(--dark);
-    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    font-family: 'Nunito', sans-serif;
     min-height: 100vh;
-    padding: 24px 16px 40px;
-    color: var(--text-light);
-    background-image:
-      radial-gradient(ellipse at 20% 10%, rgba(44,106,79,0.18) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 90%, rgba(123,45,139,0.18) 0%, transparent 50%);
+    padding: 20px 16px 40px;
+    color: var(--text-dark);
   }
 
   header {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
   }
 
   header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    color: var(--accent);
-    letter-spacing: -0.5px;
+    font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+    font-weight: 800;
+    color: var(--text-dark);
     margin-bottom: 10px;
   }
 
   .instructions {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 12px 20px;
-    max-width: 640px;
+    background: white;
+    border: 1.5px solid #e0d8f0;
+    border-radius: 14px;
+    padding: 12px 18px;
+    max-width: 660px;
     margin: 0 auto;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: rgba(250,247,242,0.85);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--text-mid);
   }
 
-  .instructions strong { color: var(--accent); }
+  .instructions strong { color: var(--text-dark); }
+  .instructions em { color: #5a9a7a; font-style: normal; font-weight: 600; }
 
-  /* SELECTED SENTENCE BAR */
   .sentence-bar {
-    max-width: 800px;
-    margin: 0 auto 28px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(244,162,97,0.3);
+    max-width: 860px;
+    margin: 0 auto 22px;
+    background: white;
+    border: 1.5px solid #e0d8f0;
     border-radius: 14px;
-    padding: 14px 20px;
+    padding: 12px 18px;
     display: flex;
     align-items: center;
     gap: 12px;
-    min-height: 60px;
+    min-height: 54px;
     flex-wrap: wrap;
   }
 
   .sentence-bar .label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--accent);
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--text-mid);
     white-space: nowrap;
   }
 
-  .sentence-bar .chips {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 
   .chip {
-    padding: 6px 14px;
+    padding: 5px 14px;
     border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.88rem;
+    font-weight: 700;
   }
 
-  .chip.subject { background: var(--subject-front); color: #fff; }
-  .chip.action { background: var(--action-back); color: #fff; }
-  .chip.empty {
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.3);
-    border: 1px dashed rgba(255,255,255,0.2);
-  }
+  .chip.subject { background: var(--subject-front); color: var(--text-dark); border: 1.5px solid var(--subject-accent); }
+  .chip.action { background: var(--action-front); color: var(--text-dark); border: 1.5px solid var(--action-accent); }
+  .chip.empty { background: #f0ecf8; color: #b0aac8; border: 1.5px dashed #d0c8e8; }
 
   .reset-btn {
     margin-left: auto;
-    background: rgba(244,162,97,0.15);
-    border: 1px solid rgba(244,162,97,0.4);
-    color: var(--accent);
+    background: #f0ecf8;
+    border: 1.5px solid #d0c8e8;
+    color: var(--text-mid);
     border-radius: 8px;
-    padding: 6px 14px;
+    padding: 5px 14px;
     font-size: 0.82rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.2s;
-    white-space: nowrap;
   }
-  .reset-btn:hover { background: rgba(244,162,97,0.3); }
+  .reset-btn:hover { background: #e0d8f0; }
 
-  /* SECTIONS */
   .sections {
     max-width: 960px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 24px;
   }
 
   .section {
-    background: rgba(255,255,255,0.03);
-    border-radius: 18px;
-    padding: 20px 20px 24px;
-    border: 1px solid rgba(255,255,255,0.07);
+    background: white;
+    border-radius: 16px;
+    padding: 18px 18px 22px;
+    border: 1.5px solid #e8e0f4;
   }
 
   .section-title {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-weight: 600;
-    margin-bottom: 16px;
+    font-weight: 800;
+    margin-bottom: 14px;
     padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1.5px solid #f0ecf8;
   }
 
-  .section-title.subject { color: #52b788; }
-  .section-title.action { color: #c77dff; }
+  .section-title.subject { color: var(--subject-accent); }
+  .section-title.action { color: var(--action-accent); }
 
-  /* CARD GRID */
   .card-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
   }
 
-  /* CARD */
   .card {
     width: var(--card-w);
     height: var(--card-h);
@@ -171,7 +156,7 @@
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 10px;
   }
 
@@ -185,91 +170,81 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 6px;
     text-align: center;
+    flex-direction: column;
+    gap: 2px;
   }
 
-  /* SUBJECT card faces */
+  /* Subject back */
   .card.subject .card-back-face {
-    background: linear-gradient(135deg, #2d6a4f, #1b4332);
-    border: 1.5px solid rgba(82,183,136,0.4);
+    background: var(--subject-back);
+    border: 2px solid var(--subject-accent);
   }
-
+  /* Subject front */
   .card.subject .card-front-face {
-    background: linear-gradient(135deg, #40916c, #2d6a4f);
-    border: 1.5px solid rgba(82,183,136,0.6);
+    background: var(--subject-front);
+    border: 2px solid var(--subject-accent);
     transform: rotateY(180deg);
   }
-
-  /* ACTION card faces */
+  /* Action back */
   .card.action .card-back-face {
-    background: linear-gradient(135deg, #7b2d8b, #4a1259);
-    border: 1.5px solid rgba(199,125,255,0.4);
+    background: var(--action-back);
+    border: 2px solid var(--action-accent);
   }
-
+  /* Action front */
   .card.action .card-front-face {
-    background: linear-gradient(135deg, #9d4edd, #7b2d8b);
-    border: 1.5px solid rgba(199,125,255,0.6);
+    background: var(--action-front);
+    border: 2px solid var(--action-accent);
     transform: rotateY(180deg);
   }
 
-  /* Back pattern */
-  .card-back-face::before {
-    content: '';
-    position: absolute;
-    inset: 6px;
-    border-radius: 6px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: repeating-linear-gradient(
-      45deg,
-      rgba(255,255,255,0.03),
-      rgba(255,255,255,0.03) 2px,
-      transparent 2px,
-      transparent 8px
-    );
+  .card-back-face .card-id {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: white;
+    opacity: 0.9;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.15);
   }
 
-  .card-back-face .card-icon {
-    font-size: 1.4rem;
-    position: relative;
-    z-index: 1;
+  .card-front-face .card-id-small {
+    font-size: 0.65rem;
+    font-weight: 800;
+    opacity: 0.5;
+    color: var(--text-dark);
+    position: absolute;
+    top: 5px;
+    left: 7px;
   }
 
   .card-front-face .card-text {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: #fff;
-    line-height: 1.3;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.25;
   }
 
   .card-front-face .card-text strong {
     display: block;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
+    font-weight: 800;
   }
 
-  /* SELECTED state */
+  /* Selected */
   .card.selected .card-front-face {
-    box-shadow: 0 0 0 2.5px var(--selected-glow), 0 0 20px rgba(244,162,97,0.4);
+    box-shadow: 0 0 0 2.5px var(--accent), 0 4px 16px rgba(244,162,97,0.3);
   }
 
-  .card.selected.subject .card-front-face {
-    background: linear-gradient(135deg, #52b788, #2d6a4f);
-  }
-
-  .card.selected.action .card-front-face {
-    background: linear-gradient(135deg, #c77dff, #9d4edd);
-  }
-
-  /* Already flipped but not selected — dim slightly */
+  /* Dimmed flipped not selected */
   .card.flipped:not(.selected) .card-front-face {
-    opacity: 0.65;
+    opacity: 0.55;
   }
 
   footer {
     text-align: center;
-    margin-top: 36px;
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.25);
+    margin-top: 30px;
+    font-size: 0.75rem;
+    color: #b0aac8;
   }
 </style>
 </head>
@@ -278,17 +253,17 @@
 <header>
   <h1>Past Simple Card Game</h1>
   <div class="instructions">
-    Flip one <strong style="color:#52b788">Subject card</strong> and one <strong style="color:#c77dff">Action card</strong>. Use them to talk about yourself in the past simple. For example, <em>"I went to the beach."</em> or <em>"I didn't go to the beach."</em>
+    <strong>Instructions:</strong> Pick one <strong>Subject card</strong> and one <strong>Action card</strong>. Use them to talk about yourself in the past simple. For example, <em>"I went to the beach last weekend."</em> or <em>"I didn't go to the beach last weekend."</em>
   </div>
 </header>
 
 <div class="sentence-bar">
-  <span class="label">Your cards:</span>
+  <span class="label">Selected:</span>
   <div class="chips">
     <span class="chip subject empty" id="selected-subject">Subject</span>
     <span class="chip action empty" id="selected-action">Action</span>
   </div>
-  <button class="reset-btn" onclick="resetAll()">↺ Reset all</button>
+  <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
 </div>
 
 <div class="sections">
@@ -305,110 +280,116 @@
 
 </div>
 
-<footer>Past Simple Practice · A2 Level · Flip · Form · Speak</footer>
+<footer>Past Simple Practice · A2 Level</footer>
 
 <script>
 const subjects = [
-  "I","You","He","She","They","We","The teacher","My mum",
-  "My dad","My brother","My sister","My friend","My parents",
-  "My family","My classmate","My friends","My grandma",
-  "My grandpa","My uncle","The students"
+  "I","You","He","She","They","We",
+  "The teacher","My mum","My dad","My brother",
+  "My sister","My friend","My parents","My family",
+  "My classmate","My friends","My grandma","My grandpa",
+  "My uncle","The students"
 ];
 
 const actions = [
-  {verb:"go", rest:"to the beach"},
-  {verb:"watch", rest:"a movie"},
-  {verb:"play", rest:"football"},
-  {verb:"eat", rest:"at a restaurant"},
-  {verb:"learn", rest:"English"},
-  {verb:"read", rest:"a book"},
-  {verb:"listen", rest:"to music"},
-  {verb:"buy", rest:"new clothes"},
-  {verb:"take", rest:"photos"},
-  {verb:"write", rest:"a message"},
-  {verb:"make", rest:"a cake"},
-  {verb:"see", rest:"a friend"},
-  {verb:"finish", rest:"work"},
-  {verb:"dance", rest:"at a party"},
-  {verb:"walk", rest:"in the park"},
-  {verb:"cook", rest:"dinner"},
-  {verb:"meet", rest:"a neighbour"},
-  {verb:"lose", rest:"the keys"},
-  {verb:"break", rest:"a glass"},
-  {verb:"find", rest:"the luggage"},
+  {verb:"go",rest:"to the beach"},
+  {verb:"watch",rest:"a movie"},
+  {verb:"play",rest:"football"},
+  {verb:"eat",rest:"at a restaurant"},
+  {verb:"learn",rest:"English"},
+  {verb:"read",rest:"a book"},
+  {verb:"listen",rest:"to music"},
+  {verb:"buy",rest:"new clothes"},
+  {verb:"take",rest:"photos"},
+  {verb:"write",rest:"a message"},
+  {verb:"make",rest:"a cake"},
+  {verb:"see",rest:"a friend"},
+  {verb:"finish",rest:"work"},
+  {verb:"dance",rest:"at a party"},
+  {verb:"walk",rest:"in the park"},
+  {verb:"cook",rest:"dinner"},
+  {verb:"meet",rest:"a neighbour"},
+  {verb:"lose",rest:"the keys"},
+  {verb:"break",rest:"a glass"},
+  {verb:"find",rest:"the luggage"},
 ];
+
+const letters = "ABCDEFGHIJKLMNOPQRST".split('');
 
 let selectedSubject = null;
 let selectedAction = null;
 
-function buildGrid(containerId, items, type) {
-  const grid = document.getElementById(containerId);
-  items.forEach((item, i) => {
+function buildSubjects() {
+  const grid = document.getElementById('subject-grid');
+  subjects.forEach((s, i) => {
     const card = document.createElement('div');
-    card.className = `card ${type}`;
-    card.dataset.index = i;
-
-    const label = type === 'subject'
-      ? item
-      : `<strong>${item.verb}</strong> ${item.rest}`;
-
+    card.className = 'card subject';
     card.innerHTML = `
       <div class="card-inner">
         <div class="card-face card-back-face">
-          <span class="card-icon">${type === 'subject' ? '👤' : '⚡'}</span>
+          <span class="card-id">${i+1}</span>
         </div>
         <div class="card-face card-front-face">
-          <span class="card-text">${label}</span>
+          <span class="card-id-small">${i+1}</span>
+          <span class="card-text">${s}</span>
         </div>
-      </div>
-    `;
-
-    card.addEventListener('click', () => handleClick(card, type, i));
+      </div>`;
+    card.addEventListener('click', () => handleClick(card, 'subject', i, s));
     grid.appendChild(card);
   });
 }
 
-function handleClick(card, type, index) {
-  // Flip it if not already flipped
-  card.classList.add('flipped');
+function buildActions() {
+  const grid = document.getElementById('action-grid');
+  actions.forEach((a, i) => {
+    const card = document.createElement('div');
+    card.className = 'card action';
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="card-face card-back-face">
+          <span class="card-id">${letters[i]}</span>
+        </div>
+        <div class="card-face card-front-face">
+          <span class="card-id-small">${letters[i]}</span>
+          <span class="card-text"><strong>${a.verb}</strong>${a.rest}</span>
+        </div>
+      </div>`;
+    card.addEventListener('click', () => handleClick(card, 'action', i, `${a.verb} ${a.rest}`));
+    grid.appendChild(card);
+  });
+}
 
+function handleClick(card, type, index, label) {
+  card.classList.add('flipped');
   if (type === 'subject') {
-    // Deselect previous
-    if (selectedSubject !== null) {
-      document.querySelectorAll('.card.subject').forEach(c => c.classList.remove('selected'));
-    }
+    document.querySelectorAll('.card.subject').forEach(c => c.classList.remove('selected'));
     selectedSubject = index;
     card.classList.add('selected');
-    document.getElementById('selected-subject').textContent = subjects[index];
-    document.getElementById('selected-subject').classList.remove('empty');
+    const el = document.getElementById('selected-subject');
+    el.textContent = label;
+    el.classList.remove('empty');
   } else {
-    if (selectedAction !== null) {
-      document.querySelectorAll('.card.action').forEach(c => c.classList.remove('selected'));
-    }
+    document.querySelectorAll('.card.action').forEach(c => c.classList.remove('selected'));
     selectedAction = index;
     card.classList.add('selected');
-    const a = actions[index];
-    document.getElementById('selected-action').textContent = `${a.verb} ${a.rest}`;
-    document.getElementById('selected-action').classList.remove('empty');
+    const el = document.getElementById('selected-action');
+    el.textContent = label;
+    el.classList.remove('empty');
   }
 }
 
 function resetAll() {
   selectedSubject = null;
   selectedAction = null;
-  document.querySelectorAll('.card').forEach(c => {
-    c.classList.remove('flipped', 'selected');
-  });
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('flipped','selected'));
   const ss = document.getElementById('selected-subject');
   const sa = document.getElementById('selected-action');
-  ss.textContent = 'Subject';
-  ss.classList.add('empty');
-  sa.textContent = 'Action';
-  sa.classList.add('empty');
+  ss.textContent = 'Subject'; ss.classList.add('empty');
+  sa.textContent = 'Action'; sa.classList.add('empty');
 }
 
-buildGrid('subject-grid', subjects, 'subject');
-buildGrid('action-grid', actions, 'action');
+buildSubjects();
+buildActions();
 </script>
 </body>
 </html>
